@@ -1,0 +1,11 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                           controllers.HomeController.index
+GET     /pizzas/namen               controllers.PizzaController.showPizzaNamen
+GET     /pizzas                     controllers.PizzaController.pizzas
+GET     /pizzas/:pizzaId            controllers.PizzaController.pizzaDetails(pizzaId: Long)
+POST    /pizzas                     controllers.PizzaController.updatePizza
+
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
