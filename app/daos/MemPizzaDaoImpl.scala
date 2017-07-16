@@ -23,21 +23,40 @@ class MemPizzaDaoImpl extends PizzaDao {
 
   override def setup(): Future[Unit] = Future.successful(())
 
-  // Voorbeeld: de [[FixedPublisher]] is een implementatie van een publisher die een vaste lijst gegevens oplevert
-  // deze kun je gebruiken om de andere functies te implementeren
   override def pizzas(): Publisher[PizzaRow] = new FixedPublisher(pizzaTable)
 
-  // Tip: kijk goed naar het return type van deze functie
-  override def pizzasVolledig(): Publisher[(PizzaRow, ToppingRow)] = ???
+  override def pizzasVolledig(): Publisher[(PizzaRow, ToppingRow)] = {
+    new FixedPublisher(toppingTable.map { toppingRow ⇒
+      val pizzaRow = pizzaTable.filter(_.id == toppingRow.pizzaId).head
+      (pizzaRow, toppingRow)
+    })
+  }
 
-  override def pizza(pizzaId: Long): Publisher[PizzaRow] = ???
+  override def pizza(pizzaId: Long): Publisher[PizzaRow] = new FixedPublisher(pizzaTable.filter(_.id == pizzaId))
 
-  override def pizzaToppings(pizzaId: Long): Publisher[ToppingRow] = ???
+  override def pizzaToppings(pizzaId: Long): Publisher[ToppingRow] = new FixedPublisher(toppingTable.filter(_.pizzaId == pizzaId))
 
-  // Tip: toevoegen van een element aan een lijst kan in Scala met de `:+` functie
-  // Tip: een future maken die direct klaar is kan met [[Future.successful]]
-  override def updatePizza(pizzaRow: PizzaRow): Future[PizzaRow] = ???
+  override def updatePizza(pizzaRow: PizzaRow): Future[PizzaRow] = {
+    if (pizzaTable.contains(pizzaRow)) {
+      Future.successful(pizzaRow)
+    } else {
+      val newRow = pizzaRow.copy(id = pizzaTable.length + 1)
+      pizzaTable = pizzaTable :+ newRow
 
-  // Tip: een item updaten in een lijst kan bijv met de `updated` functie
-  override def updateToppings(toppings: Seq[ToppingRow]): Future[Seq[ToppingRow]] = ???
+      Future.successful(newRow)
+    }
+  }
+
+  override def updateToppings(toppings: Seq[ToppingRow]): Future[Seq[ToppingRow]] = {
+    Future.successful(toppings.map { newToppingRow ⇒
+      val idx = toppingTable.indexWhere(_.pizzaId == newToppingRow.pizzaId)
+      if (idx >= 0) {
+        toppingTable = toppingTable.updated(idx, newToppingRow)
+      } else {
+        toppingTable = toppingTable :+ newToppingRow
+      }
+
+      newToppingRow
+    })
+  }
 }

@@ -9,7 +9,7 @@ import scala.concurrent.Future
 /**
   * Pizza DAO functies
   */
-@ImplementedBy(classOf[MemPizzaDaoImpl])
+@ImplementedBy(classOf[SlickPizzaDaoImpl])
 trait PizzaDao {
 
   /**
