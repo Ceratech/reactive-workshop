@@ -36,16 +36,31 @@ class SlickPizzaDaoImpl @Inject()(protected val dbConfigProvider: DatabaseConfig
     pizzasTable.result
   }
 
-  override def pizza(pizza: Long): Publisher[PizzaRow] = ???
+  override def pizzasVolledig(): Publisher[(PizzaRow, ToppingRow)] = db.stream {
+    (for {
+      p ← pizzasTable
+      t ← toppingsTable if p.id === t.pizzaId
+    } yield (p, t)).result
+  }
 
-  // Tip: joins!
-  override def pizzasVolledig(): Publisher[(PizzaRow, ToppingRow)] = ???
+  override def pizza(pizza: Long): Publisher[PizzaRow] = db.stream {
+    pizzasTable.filter(_.id === pizza).result
+  }
 
-  override def pizzaToppings(pizza: Long): Publisher[ToppingRow] = ???
+  override def pizzaToppings(pizza: Long): Publisher[ToppingRow] = db.stream {
+    toppingsTable.filter(_.pizzaId === pizza).result
+  }
 
-  // Let op; geeft Future! Updates zijn enkel en geen stream in Slick!
-  override def updatePizza(pizzaRow: PizzaRow): Future[PizzaRow] = ???
+  override def updatePizza(pizzaRow: PizzaRow): Future[PizzaRow] = db.run {
+    (pizzasTable returning pizzasTable.map(_.id)).insertOrUpdate(pizzaRow).map {
+      case Some(id) ⇒ pizzaRow.copy(id = id)
+      case None ⇒ pizzaRow
+    }
+  }
 
-  // Let op; geeft Future! Updates zijn enkel en geen stream in Slick!
-  override def updateToppings(toppingRows: Seq[ToppingRow]): Future[Seq[ToppingRow]] = ???
+  override def updateToppings(toppingRows: Seq[ToppingRow]): Future[Seq[ToppingRow]] = db.run {
+    DBIO.sequence(toppingRows.map { row ⇒
+      toppingsTable.insertOrUpdate(row).map(_ ⇒ row)
+    }.toList)
+  }
 }
