@@ -32,6 +32,10 @@ De `POST` body voor de update/toevoegen call is als volgt:
 }
 ```
 
+### Postman
+
+In het project zit een `Pizza API.postman_collection.json` welke alle requests bevat in Postman formaat, deze kan je importeren in Postman om makkelijk de requests uit te voeren. Via Postman is het de grote `Import` knop bovenin.
+
 ## Unit test
 
 Er is een (vrij kale) unit-test voor de `PizzaService`, deze is te vinden in de `PizzaServiceSpec` file. De test kan je draaien door rechtermuisknop op de file en kies voor `Run`. 
