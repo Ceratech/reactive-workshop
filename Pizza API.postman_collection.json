@@ -1,0 +1,91 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Pizza API",
+		"_postman_id": "12fcab8f-7be3-3d31-f602-d06533cf21f2",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Update/toevoegen pizza",
+			"request": {
+				"url": "http://localhost:9000/pizzas",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"naam\": \"Margharita\",\n    \"toppings\": [\n        {\n            \"ingredient\": \"Mozzarella\",\n            \"aantal\": 2\n        }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get pizzas",
+			"request": {
+				"url": "http://localhost:9000/pizzas",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"naam\": \"Hawai\",\n    \"toppings\": [\n        {\n            \"ingredient\": \"Ananas\",\n            \"aantal\": 2\n        }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get enkele pizza",
+			"request": {
+				"url": "http://localhost:9000/pizzas/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"naam\": \"Hawai\",\n    \"toppings\": [\n        {\n            \"ingredient\": \"Ananas\",\n            \"aantal\": 2\n        }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Pizzalijst ophalen",
+			"request": {
+				"url": "http://localhost:9000/pizzas/namen",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"naam\": \"Hawai\",\n    \"toppings\": [\n        {\n            \"ingredient\": \"Ananas\",\n            \"aantal\": 2\n        }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
