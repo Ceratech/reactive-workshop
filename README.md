@@ -1,10 +1,10 @@
 ## Nodig
 
-Intellij met Scala plugin
+Intellij met Scala plugin; via plugins en zoeken op `Scala` (http://www.jetbrains.net/confluence/display/SCA/Scala+Plugin+for+IntelliJ+IDEA).
 
 ## Openen project
 
-Importeer project in Intellij: `File -> New -> Project from existing sources...`. Kies bij import optie `Import from external model` en kies `SBT`. Zorg dat er op het volgende scherm een JDK 1.8 geselecteerd staat en kies `Finnish`.
+Als je de Scala plugin geinstalleerd hebt kun je het project openen via `File -> open`.
 
 ## Runnen project
 
