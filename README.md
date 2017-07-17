@@ -1,10 +1,10 @@
 ## Nodig
 
-Intellij met Scala plugin
+Intellij met Scala plugin; via plugins en zoeken op `Scala` (http://www.jetbrains.net/confluence/display/SCA/Scala+Plugin+for+IntelliJ+IDEA).
 
 ## Openen project
 
-Importeer project in Intellij: `File -> New -> Project from existing sources...`. Kies bij import optie `Import from external model` en kies `SBT`. Zorg dat er op het volgende scherm een JDK 1.8 geselecteerd staat en kies `Finnish`.
+Als je de Scala plugin geinstalleerd hebt kun je het project openen via `File -> open`.
 
 ## Runnen project
 
@@ -31,6 +31,10 @@ De `POST` body voor de update/toevoegen call is als volgt:
     ]
 }
 ```
+
+### Postman
+
+In het project zit een `Pizza API.postman_collection.json` welke alle requests bevat in Postman formaat, deze kan je importeren in Postman om makkelijk de requests uit te voeren. Via Postman is het de grote `Import` knop bovenin.
 
 ## Unit test
 
